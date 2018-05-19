@@ -3,11 +3,11 @@
 <form action="/news" method="POST" role="form">
   <div class="form-group">
     <label for="exampleFormControlTextarea1"></label>
-    <textarea name="news_text" placeholder="text area" 
+    <textarea name="news[ntext]" placeholder="text area" 
     class="form-control" rows="3" style="width: 600px"></textarea>
   </div>
   <div class="form-inline">
-    <input name="username" type="login" class="form-control" placeholder="Your name">
+    <input name="news[username]" type="login" class="form-control" placeholder="Your name">
     <button type="submit" class="btn btn-primary">Post it!</button>  
   </div>
   </br>

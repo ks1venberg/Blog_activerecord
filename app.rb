@@ -11,24 +11,30 @@ set :database, 'sqlite3:newsblog.db'
 class News < ActiveRecord::Base
 # comments! - not "comment"
 has_many :comments
-	validates :username, presence: true
-	validates :ntext, presence: true, length: {minimum: 3}
+	# validates :username, presence: true
+	# validates :ntext, presence: true, length: {minimum: 3}
 end
 
 class Comment < ActiveRecord::Base
 belongs_to :news
-	validates :cmname, presence: true
-	validates :cmtext, presence: true, length: {minimum: 3}
+	# validates :cmname, presence: true
+	# validates :cmtext, presence: true, length: {minimum: 3}
 end
 
+before do
+	#@nnn = News.new
+	@newsresult = News.all
+end
+
+
 get '/' do
-	erb "lets start!"
+	# erb "lets start!"
 	# @newsresult = @db.execute 'select * from newstable order by id desc'
-	# erb :index		
+	erb :index		
 end
 
 get '/news' do
-	erb :news	
+	erb :addnews	
 end
 
 get '/comments' do
@@ -39,7 +45,7 @@ get '/contacts' do
 	erb "Contacts"
 end
 
-get '/new/:news_id' do
+get '/news/:news_id' do
 	@news_id = params[:news_id]
 	detailnew = @db.execute 'select * from newstable where id = ?', [@news_id]
 	@resdetail = detailnew[0]
@@ -49,7 +55,7 @@ get '/new/:news_id' do
 	# erb "Displaying this news with id# #{news_id} in details"
 end
 
-post '/new/:news_id' do
+post '/news/:news_id' do
 	@news_id = params[:news_id]
 	@cmtext = params[:comment_text]
 	@cmname = params[:commenter_name]
@@ -94,41 +100,13 @@ end
 
 
 post '/news' do
-	@username = params[:username]
-	@ntext = params[:news_text]
+	@nnn = News.new params[:news]
 
-	if @username.length<=0
-		@error = "введите ваше имя"
-		erb :news
-	end
-
-	if @ntext.length<=0
-		@error = "введите сообщение"
-		erb :news
-	end
-
-	if @username.length !=0 && @ntext.length != 0
-
-		@db.execute 'INSERT INTO newstable
-
-		(
-		username,
-		ntext,
-		datetime
-		)
-
-		values 
-		(
-		?,
-		?,
-		datetime()
-		 )', [@username, @ntext]
-
-		 # если не использовать редирект то можно вывести эту строку
-		# erb "#{@username}, thanks for addind this news: #{@ntext}"
-		redirect to ('/')
+	if @nnn.save
+		erb "Thank you for adding information!"
 	else
-		erb :news	
+		@error = @nnn.errors.full_messages
+		erb :addnews	
 	end
 	
 end

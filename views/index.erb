@@ -1,11 +1,11 @@
 <h1>Latest, hot.. start from here</h1>
 <br />
-<% @newsresult.each do |new| %>
+<% @newsresult.each do |n| %>
 	<p>
-		<%= new['ntext'] %>
+		<%= n['ntext'] %>
 		<br />
-		user <%= new['username'] %> has added this at: <%= new['datetime'] %>
+		user <%= n['username'] %> has added this at: <%= n['datetime'] %>
 		<!-- страница с номером сообщения (id - обращение к таблице бд) -->
-		<a href="/new/<%= new['id'] %>">Comments</a>
+		<a href="/news#/<%= n['id'] %>">Comments</a>
 	</p>
 <%	end	%>
