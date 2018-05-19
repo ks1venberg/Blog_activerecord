@@ -8,6 +8,19 @@ require 'sqlite3'
 set :database, 'sqlite3:newsblog.db'
 
 
+class News < ActiveRecord::Base
+# comments! - not "comment"
+has_many :comments
+	validates :username, presence: true
+	validates :ntext, presence: true, length: {minimum: 3}
+end
+
+class Comment < ActiveRecord::Base
+belongs_to :news
+	validates :cmname, presence: true
+	validates :cmtext, presence: true, length: {minimum: 3}
+end
+
 get '/' do
 	@newsresult = @db.execute 'select * from newstable order by id desc'
 	erb :index		
