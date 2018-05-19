@@ -2,7 +2,7 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
-require 'sqlite3'
+require 'sinatra/activerecord'
 
 
 set :database, 'sqlite3:newsblog.db'
@@ -22,8 +22,9 @@ belongs_to :news
 end
 
 get '/' do
-	@newsresult = @db.execute 'select * from newstable order by id desc'
-	erb :index		
+	erb "lets start!"
+	# @newsresult = @db.execute 'select * from newstable order by id desc'
+	# erb :index		
 end
 
 get '/news' do
