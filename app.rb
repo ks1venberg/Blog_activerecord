@@ -4,36 +4,8 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'sqlite3'
 
-def inint_db
-@db = SQLite3::Database.new 'newsportal.db'
-@db.results_as_hash = true
-end
 
-before do
-	inint_db
-end
-
-
-configure do
-	inint_db
-
-	@db.execute 'CREATE TABLE IF NOT EXISTS newstable 
-	 (
-		id integer primary key autoincrement,
-		username text, 
-		ntext text,
-		datetime timestamp
-	 )'
-
-	@db.execute 'CREATE TABLE IF NOT EXISTS comments
-	 (
-		cmid integer primary key autoincrement,
-		news_id integer,
-		cmname text, 
-		cmtext text,
-		cdatetime timestamp
-	 )'
-end
+set :database, 'sqlite3:newsblog.db'
 
 
 get '/' do
