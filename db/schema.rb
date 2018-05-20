@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_05_19_150914) do
+ActiveRecord::Schema.define(version: 2018_05_20_073644) do
 
   create_table "comm_tbl", force: :cascade do |t|
     t.integer "news_tbl_id"
@@ -24,6 +24,20 @@ ActiveRecord::Schema.define(version: 2018_05_19_150914) do
     t.text "username"
     t.text "ntext"
     t.datetime "datetime"
+  end
+
+  create_table "remark_tbl", force: :cascade do |t|
+    t.integer "rumor_id"
+    t.text "cmname"
+    t.text "cmtext"
+    t.datetime "created_at"
+    t.index ["rumor_id"], name: "index_remark_tbl_on_rumor_id"
+  end
+
+  create_table "rumor_tbl", force: :cascade do |t|
+    t.text "username"
+    t.text "ntext"
+    t.datetime "created_at"
   end
 
 end

@@ -8,22 +8,35 @@ require 'sinatra/activerecord'
 set :database, 'sqlite3:newsblog.db'
 
 
-class News < ActiveRecord::Base
+# class News < ActiveRecord::Base
+# # comments! - not "comment"
+# has_many :comments
+# 	# validates :username, presence: true
+# 	# validates :ntext, presence: true, length: {minimum: 3}
+# end
+
+# class Comment < ActiveRecord::Base
+# belongs_to :news
+# 	# validates :cmname, presence: true
+# 	# validates :cmtext, presence: true, length: {minimum: 3}
+# end
+
+class Rumor < ActiveRecord::Base
 # comments! - not "comment"
-has_many :comments
+has_many :remarks
 	# validates :username, presence: true
 	# validates :ntext, presence: true, length: {minimum: 3}
 end
 
-class Comment < ActiveRecord::Base
-belongs_to :news
+class Remark < ActiveRecord::Base
+belongs_to :rumor
 	# validates :cmname, presence: true
 	# validates :cmtext, presence: true, length: {minimum: 3}
 end
 
 before do
 	#@nnn = News.new
-	@newsresult = News.all
+	@newsresult = Rumor.all
 end
 
 
@@ -100,7 +113,7 @@ end
 
 
 post '/news' do
-	@nnn = News.new params[:news]
+	@nnn = Rumor.new params[:rumor]
 
 	if @nnn.save
 		erb "Thank you for adding information!"
